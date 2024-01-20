@@ -1,5 +1,9 @@
 import { View, Text, ScrollView, Pressable } from "react-native";
 import { Link } from "expo-router";
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
+
 
 export default function Index() {
     return <View style={{flex: 1}}>
