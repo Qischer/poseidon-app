@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import { Calendar, Timeline, Agenda } from "react-native-calendars";
 import Timetable from "../components/timetable";
+import EventInput from "./eventInput"
 
 export default function CalendarView() {
     const [date, setDate] = useState("")
@@ -46,6 +47,7 @@ export default function CalendarView() {
                 />
                 <Text style={{fontSize:20,textAlign:'center',fontSize:25,fontWeight:'bold'}}>{date}</Text>
                 <Timetable/>
+                <EventInput/>
             </View>
         </SafeAreaView>
     )
