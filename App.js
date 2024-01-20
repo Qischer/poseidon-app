@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, {useState} from 'react';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {Agenda, Calendar, LocaleConfig} from 'react-native-calendars';
+import {AgendaScreen} from './AgendaScreen'
 
 export default function App() {
 
@@ -10,7 +11,6 @@ export default function App() {
   return (
     
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <Calendar
       onDayPress={day => {
         setSelected(day.dateString);
@@ -19,7 +19,10 @@ export default function App() {
         [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
       }}
       />
+
+
       <StatusBar style="auto" />
+      AgendaScreen
     </View>
   );
 }
