@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import  { View, Text, TouchableOpacity } from 'react-native';
-import Sound from 'react-native-sound';
+import  { View, Text, TouchableOpacity, Image } from 'react-native';
+// import Sound from 'react-native-sound';
 
-const pomodoroTimer = () => {
-    const [timer, setTimer] = useState(1500);
-    const[isActive, setIsActive] = useState(false);
+export default function PomodoroTimer() {
 
-    const sound = new Sound('bell.mp3', Sound.MAIN_BUNDLE, (error) => {
-        if (error) {
-            console.log('Error loading sound:', error);
-        }
-    });
+    var image = <Image source = {require('../assets/corn.png')} />;
+    const [timer, setTimer] = useState(2);
+    const [isActive, setIsActive] = useState(false);
+
+    // const sound = new Sound('bell.mp3', Sound.MAIN_BUNDLE, (error) => {
+    //     if (error) {
+    //         console.log('Error loading sound:', error);
+    //     }
+    // });
 
     useEffect(() => {
         let interval;
 
         if (isActive && timer > 0) {
+            image = <Image source = {require('../assets/corn.png')} />;
             interval = setInterval(() => {
                 setTimer((prevTimer) => prevTimer - 1);
             }, 1000);
         } else if (timer === 0) {
-            vibrate();
+            image = <Image source = {require('../assets/corn_fire.png')} />;
             setIsActive(false);
             setTimer(300);
         }
@@ -43,6 +46,14 @@ const pomodoroTimer = () => {
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
      };
 
+     var chooseImage = () => {
+        if (fire) {
+            return '../assets/corn_fire.png';
+        } else {
+            return '../assets/corn.png'
+        }
+     };
+
      return (
         <View>
             <Text>{formatTime(timer)}</Text>
@@ -50,10 +61,9 @@ const pomodoroTimer = () => {
                 <Text>{isActive ? 'Pause' : 'Start'}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={resetTimer}>
-                <Text>Reset</Text>
+                <Text> Reset </Text>
             </TouchableOpacity>
+            {image}
         </View>
      );
 };
-
-export default pomodoro;
