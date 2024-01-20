@@ -1,11 +1,15 @@
-import { View, Text, ScrollView } from "react-native";
-import NavBar from "../components/navbar";
+import { View, Text, ScrollView, Pressable } from "react-native";
+import { Link } from "expo-router";
 
-export default function CalenderPage() {
+export default function Index() {
     return <View style={{flex: 1}}>
         <ScrollView>
-            <Text>Calender Page</Text>
+            <Text>start here</Text>
+            <Link href="/home" asChild>
+                <Pressable>
+                    <Text>to app</Text>
+                </Pressable>
+            </Link>
         </ScrollView>
-        <NavBar/>
     </View>
 }
