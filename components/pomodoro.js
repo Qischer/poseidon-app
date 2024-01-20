@@ -7,6 +7,8 @@ export default function PomodoroTimer() {
     const [timer, setTimer] = useState(1500);
     const [isActive, setIsActive] = useState(false);
     const [image, setImage] = useState(<Image source = {require('../assets/corn.png')} />);
+    const [onFire, setOnFire] = useState(false);
+
 
     useEffect(() => {
         let interval;
@@ -25,17 +27,22 @@ export default function PomodoroTimer() {
 
      const toggleTimer = () => {
         setIsActive(!isActive);
+        window.addEventListener("blur", stopTimer);
      };
 
      const resetTimer = () => {
         setIsActive(false);
         setTimer(1500);
         setImage(<Image source = {require('../assets/corn.png')} />);
+        setOnFire(false);
+        window.removeEventListener("blur", stopTimer);
      };
-
+ 
      const stopTimer = () => {
         setIsActive(false);
         setImage(<Image source = {require('../assets/corn_fire.png')} />);
+        setOnFire(true);
+        window.removeEventListener("blur", stopTimer);
      };
 
      const formatTime = (seconds) => {
@@ -44,18 +51,22 @@ export default function PomodoroTimer() {
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
      };
 
+     const nothing = () => {
+
+     }
+
      return (
         <View>
             <Text>{formatTime(timer)}</Text>
-            <TouchableOpacity onPress={toggleTimer}>
+            <TouchableOpacity onPress={!onFire ? toggleTimer : nothing}>
                 <Text>{isActive ? 'Pause' : 'Start'}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={resetTimer}>
                 <Text> Reset </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={stopTimer}>
+            {/* <TouchableOpacity onPress={stopTimer}>
                 <Text> Stop </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {image}
         </View>
      );

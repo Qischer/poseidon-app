@@ -16,6 +16,7 @@
     "expo-router": "~3.4.4",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
     "react-native-calendars": "^1.1303.0",
