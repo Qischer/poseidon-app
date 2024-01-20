@@ -1,6 +1,7 @@
 import { View, Text, ScrollView } from "react-native";
 import NavBar from "../components/navbar";
 import Calendar from "../components/calendar";
+import Timetable from "../components/timetable";
 
 export default function CalenderPage() {
     return <View style={{flex: 1}}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
-
 import { Calendar, Timeline, Agenda } from "react-native-calendars";
+import Timetable from "../components/timetable";
 
 export default function CalendarView() {
     const [date, setDate] = useState("")
@@ -45,7 +45,7 @@ export default function CalendarView() {
                     }}
                 />
                 <Text style={{fontSize:20,textAlign:'center',fontSize:25,fontWeight:'bold'}}>{date}</Text>
-                <Timeline/>
+                <Timetable/>
             </View>
         </SafeAreaView>
     )
