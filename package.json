@@ -12,6 +12,7 @@
     "@expo/metro-runtime": "^3.1.1",
     "expo": "^50.0.2",
     "expo-constants": "~15.4.5",
+    "expo-firebase": "^0.0.0-alpha.0",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.4",
     "expo-status-bar": "~1.11.1",
