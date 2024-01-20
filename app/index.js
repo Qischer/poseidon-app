@@ -18,7 +18,7 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 90,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: 10
+    marginTop: 40
   }
 });
 
