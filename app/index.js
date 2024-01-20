@@ -1,15 +1,36 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
-import { Link } from "expo-router";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
 
-export default function Index() {
-    return <View style={{flex: 1}}>
-        <ScrollView>
-            <Text>start here</Text>
-            <Link href="/home" asChild>
-                <Pressable>
-                    <Text>to app</Text>
-                </Pressable>
-            </Link>
-        </ScrollView>
+const WelcomeScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Text>Welcome screen!</Text>
+
+      <View style={styles.buttons}>
+        <Link href="/signin" style={styles.button}>Sign In</Link>
+        <Link href="/signup" style={styles.button}>Sign Up</Link>
+      </View>
     </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  buttons: {
+    flex: 1,
+  },
+
+  button: {
+    marginTop: 10
+  }
+});
+
+export default WelcomeScreen;
