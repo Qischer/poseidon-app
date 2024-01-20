@@ -4,26 +4,18 @@ import  { View, Text, TouchableOpacity, Image } from 'react-native';
 
 export default function PomodoroTimer() {
 
-    var image = <Image source = {require('../assets/corn.png')} />;
-    const [timer, setTimer] = useState(2);
+    const [timer, setTimer] = useState(1500);
     const [isActive, setIsActive] = useState(false);
-
-    // const sound = new Sound('bell.mp3', Sound.MAIN_BUNDLE, (error) => {
-    //     if (error) {
-    //         console.log('Error loading sound:', error);
-    //     }
-    // });
+    const [image, setImage] = useState(<Image source = {require('../assets/corn.png')} />);
 
     useEffect(() => {
         let interval;
 
         if (isActive && timer > 0) {
-            image = <Image source = {require('../assets/corn.png')} />;
             interval = setInterval(() => {
                 setTimer((prevTimer) => prevTimer - 1);
             }, 1000);
         } else if (timer === 0) {
-            image = <Image source = {require('../assets/corn_fire.png')} />;
             setIsActive(false);
             setTimer(300);
         }
@@ -38,20 +30,18 @@ export default function PomodoroTimer() {
      const resetTimer = () => {
         setIsActive(false);
         setTimer(1500);
+        setImage(<Image source = {require('../assets/corn.png')} />);
+     };
+
+     const stopTimer = () => {
+        setIsActive(false);
+        setImage(<Image source = {require('../assets/corn_fire.png')} />);
      };
 
      const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-     };
-
-     var chooseImage = () => {
-        if (fire) {
-            return '../assets/corn_fire.png';
-        } else {
-            return '../assets/corn.png'
-        }
      };
 
      return (
@@ -62,6 +52,9 @@ export default function PomodoroTimer() {
             </TouchableOpacity>
             <TouchableOpacity onPress={resetTimer}>
                 <Text> Reset </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={stopTimer}>
+                <Text> Stop </Text>
             </TouchableOpacity>
             {image}
         </View>
