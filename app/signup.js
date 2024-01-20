@@ -2,6 +2,7 @@ import { SafeAreaView, Text, View, TextInput, TouchableOpacity, StatusBar, Alert
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../services/firebase";
+import { setDoc, doc } from "firebase/firestore";
 import { router } from "expo-router";
 
 export default function SignUp() {
@@ -11,20 +12,24 @@ export default function SignUp() {
 
   const onHandleSignup = async () => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      .catch((err) => Alert.alert("Login error", err.message));;
       const user = userCredential.user;
-      
       const userRef = doc(db, "users", user.uid);
       await setDoc(userRef, {
         displayName: name,
         email: email,
         uid: user.uid,
         phoneNumber: "",
-      });
+      }).then(router.push("/"));
     } catch (error) {
       Alert.alert(error.message);
     }
   };
+
+  const onHandleFirebase = async () => {
+
+  }
 
   return (
   <View style={styles.container}>
