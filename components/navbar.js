@@ -24,11 +24,13 @@ export default function NavBar() {
 
 const styles = StyleSheet.create({
     bar: {
-        paddingVertical: 10,
+        paddingBottom: 5,
+        paddingTop: 10,
         height: 60,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        
+        borderTopWidth: 3,
+        borderColor: 'blue',
     },
 
     iconbutton: {
