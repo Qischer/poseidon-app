@@ -5090,7 +5090,7 @@ mkdirp@^1.0.4:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@^2.29.4:
+moment@^2.18.1, moment@^2.29.4:
   version "2.30.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
@@ -5743,11 +5743,6 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-calendar-timetable@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/react-native-calendar-timetable/-/react-native-calendar-timetable-1.0.6.tgz"
-  integrity sha512-gSdOLPfOAc0xSAHti29vC7z+HTX0U/3jFMhQ6TYXXsbAtBAJ1ye+20KxIDwyraASWuNHUt+pJ9y8lac0vctnJA==
-
 react-native-calendars@^1.1303.0:
   version "1.1303.0"
   resolved "https://registry.npmjs.org/react-native-calendars/-/react-native-calendars-1.1303.0.tgz"
@@ -5769,6 +5764,14 @@ react-native-circular-progress-indicator@^4.4.2:
   integrity sha512-BlgshzIIIk0TP/CZY+5oyRsHl2Sb2l6cK5tzfmrVETfn6pN8dhOKrV0i3Z6i0SM8wRgncdUUSRBpCPAexh7JoQ==
   dependencies:
     react-native-redash "*"
+
+react-native-events-calendar@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/react-native-events-calendar/-/react-native-events-calendar-1.0.8.tgz"
+  integrity sha512-2jMFWaNLA45+6qe230WpxZ1+DtrvlvW8XWCIhUzJ3rejiulKTNrc55QPM+Xm+cpZH2gRGfSykyJwY1XzDZgj/A==
+  dependencies:
+    lodash "^4.17.4"
+    moment "^2.18.1"
 
 react-native-gesture-handler@*:
   version "2.14.1"
