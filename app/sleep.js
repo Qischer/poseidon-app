@@ -13,6 +13,9 @@ export default function SleepPage() {
     const [goalHours, setGoalHours] = useState(8);
     const [hours, setHours] = useState(6);
     const [value, setValue] = useState(Math.round(hours/goalHours*100));
+
+    
+
     return <View style={{flex: 1, justifyContent: 'center'}}>
         <ScrollView>
             <Text>Sleep Page</Text>

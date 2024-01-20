@@ -14,14 +14,14 @@ export default function NavBar() {
                 <Feather name="check-circle" color={'blue'} size={40} />
             </Pressable>
         </Link>
-        <Link href="/farm" asChild>
-            <Pressable style={styles.iconbutton}>
-                <MaterialCommunityIcons name="tree-outline" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
         <Link href="/sleep" asChild>
             <Pressable style={styles.iconbutton}>
                 <Feather name="moon" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
+        <Link href="/farm" asChild>
+            <Pressable style={styles.iconbutton}>
+                <MaterialCommunityIcons name="tree-outline" color={'blue'} size={40} />
             </Pressable>
         </Link>
         <Link href="/settings" asChild>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     bar: {
         paddingBottom: 5,
         paddingTop: 10,
-        height: 60,
+        height: 80,
         flexDirection: 'row',
         justifyContent: 'space-around',
         borderTopWidth: 3,
