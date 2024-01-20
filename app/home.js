@@ -1,10 +1,10 @@
 import { View, Text, ScrollView } from "react-native";
 import NavBar from "../components/navbar";
 
-export default function SleepPage() {
+export default function CalenderPage() {
     return <View style={{flex: 1}}>
         <ScrollView>
-            <Text>Sleep Page</Text>
+            <Text>Calender Page</Text>
         </ScrollView>
         <NavBar/>
     </View>
