@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Welcome you!</Text>
+      <Text>Hello, there!!</Text>
 
       <View style={styles.buttons}>
         <Link href="/signin" style={styles.button}>Sign In</Link>
