@@ -1,24 +1,34 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
 export default function NavBar() {
     return <View style={styles.bar}>
-        <TouchableOpacity style={styles.iconbutton}>
-            <Feather name="calendar" color={'blue'} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconbutton}>
-            <Feather name="check-circle" color={'blue'} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconbutton}>
-            <MaterialCommunityIcons name="tree-outline" color={'blue'} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconbutton}>
-            <Feather name="moon" color={'blue'} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconbutton}>
-            <Feather name="settings" color={'blue'} size={40} />
-        </TouchableOpacity>
+        <Link href="/home" asChild>
+            <Pressable style={styles.iconbutton}>
+                <Feather name="calendar" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
+        <Link href="/todo" asChild>
+            <Pressable style={styles.iconbutton}>
+                <Feather name="check-circle" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
+        <Link href="/farm" asChild>
+            <Pressable style={styles.iconbutton}>
+                <MaterialCommunityIcons name="tree-outline" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
+        <Link href="/sleep" asChild>
+            <Pressable style={styles.iconbutton}>
+                <Feather name="moon" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
+        <Link href="/settings" asChild>
+            <Pressable style={styles.iconbutton}>
+                <Feather name="settings" color={'blue'} size={40} />
+            </Pressable>
+        </Link>
     </View>
 }
 
