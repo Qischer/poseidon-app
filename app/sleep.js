@@ -16,7 +16,8 @@ export default function SleepPage() {
     const [hours, setHours] = useState(6);
     const [value, setValue] = useState(Math.round(hours/goalHours*100));
 
-    return <View style={{flex: 1}}>
+    return (
+    <View style={{flex: 1}}>
         <View style={globalStyles.page}>
             <ScrollView>
                 <Text style={globalStyles.title}>Sleep Page</Text>
@@ -34,6 +35,7 @@ export default function SleepPage() {
                 <SleepStuff/>
             </ScrollView>
         </View>
+        <NavBar/>
+        </View>
     );
-    };
 };
