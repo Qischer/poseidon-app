@@ -11,18 +11,7 @@ export default function App() {
   return (
     
     <View style={styles.container}>
-      <Calendar
-      onDayPress={day => {
-        setSelected(day.dateString);
-      }}
-      markedDates={{
-        [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
-      }}
-      />
-
-
       <StatusBar style="auto" />
-      AgendaScreen
     </View>
   );
 }
