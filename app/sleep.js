@@ -3,6 +3,7 @@ import NavBar from "../components/navbar";
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 import { useState } from "react";
 import { globalStyles, secondary } from "../global";
+import SleepStuff from "../components/sleepstuff";
 
 const props = {
     activeStrokeWidth: 25,
@@ -30,6 +31,7 @@ export default function SleepPage() {
                         <Text>{hours} out of {goalHours} hours</Text>
                     </CircularProgressBase>
                 </View>
+                <SleepStuff/>
             </ScrollView>
         </View>
         <NavBar/>
