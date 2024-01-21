@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable, TouchableOpacity } from "react-native";
 import NavBar from "../components/navbar";
 import { Avatar } from "@rneui/themed";
 import { UserAuth } from "../services/authContext";
-import { globalStyles } from "../global";
+import { globalStyles,warning } from "../global";
 import { Feather } from '@expo/vector-icons';
 import { router } from "expo-router";
 
@@ -29,12 +29,12 @@ export default function SettingsPage() {
                     <Text style={{marginVertical: 15, marginHorizontal: 5}}>{user?.email}</Text>
                     <Feather name='edit-2' color={'black'} size={15} />
                 </View>
+                
             </View>
+            <TouchableOpacity onPress={handleLogout} style={{marginVertical: 10, marginHorizontal: 60, alignSelf: 'center'}}>
+                <Text style={{...globalStyles.buttonText,color: warning}}>Log Out</Text>
+            </TouchableOpacity>
         </ScrollView>
-
-        <Pressable onPress={handleLogout}>
-                <Text>Log Out</Text>
-        </Pressable>
         <NavBar/>
     </View>
 }

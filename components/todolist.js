@@ -97,7 +97,7 @@ export default function  TodoList() {
                 />
             
             <TouchableOpacity 
-                style={{... globalStyles.floatingbutton, ... globalStyles.iconbutton}}
+                style={{... globalStyles.floatingbutton, bottom: 20, ... globalStyles.iconbutton}}
                 onPress={() => setFormModal(true)}>
                 <FontAwesome6
                     name='add'
