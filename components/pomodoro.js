@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
-// import Sound from 'react-native-sound';
 
 const WORK_TIME = 1500; // 25 minutes
 const REST_TIME = 300; // 5 minutes
@@ -9,7 +8,6 @@ var burntCount = 0;
 
 export default function PomodoroTimer() {
 
-    const [cornArray, setCornArray] = useState(Array(25));
     const [isResting, setIsResting] = useState(false);
     const [timer, setTimer] = useState(WORK_TIME);
     const [isActive, setIsActive] = useState(false);
@@ -18,7 +16,6 @@ export default function PomodoroTimer() {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
-    var evtListenerAdded = false;
 
 
     useEffect(() => {
@@ -50,18 +47,6 @@ export default function PomodoroTimer() {
             setIsResting(true);
             setTimer(REST_TIME)
             cornCount++;
-            // 1 = corn, 2 = burning corn, undefined = dirt
-            // let tempCornArray = Array(25)
-            // for (let i = 0; i < 25; i++) {
-            //     if (typeof(cornArray[i] != undefined)) {
-            //         tempCornArray[i] = cornArray[i];
-            //     } else {
-            //         tempCornArray[i] = 1;
-            //         setCornArray(tempCornArray);
-            //         console.log(tempCornArray);
-            //         break;
-            //     }
-            // }
         } else if (timer === 0) {
             resetTimer();   
         }
