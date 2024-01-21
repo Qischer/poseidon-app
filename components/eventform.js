@@ -40,7 +40,7 @@ export default function EventForm({ submit }) {
 
                         <TextInput
                             style={globalStyles.input}
-                            placeholder='Start date (yyyy-mm-dd hh-mm-ss)'
+                            placeholder='Start date (yyyy-mm-dd hh:mm:ss)'
                             placeholderTextColor='#bbb'
                             onChangeText={formikProps.handleChange('start')}
                             value={formikProps.values.start}
@@ -51,7 +51,7 @@ export default function EventForm({ submit }) {
                         <TextInput
                             multiline minHeight={60}
                             style={globalStyles.input}
-                            placeholder='End date (yyyy-mm-dd hh-mm-ss)'
+                            placeholder='End date (yyyy-mm-dd hh:mm:ss)'
                             placeholderTextColor='#bbb'
                             onChangeText={formikProps.handleChange('end')}
                             value={formikProps.values.end}
