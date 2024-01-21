@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
-const primary = "#66999B";
-const secondary = "#694D75";
-const warning = "#CD4631";
+
+export const primary = "#66999B";
+export const secondary = "#694D75";
+export const warning = "#CD4631";
 
 export const globalStyles = StyleSheet.create({
     container: {
@@ -9,6 +10,12 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    page: {
+        flex: 1,
+        paddingTop: 70,
+        paddingHorizontal: 20,
     },
 
     title: {
@@ -40,6 +47,7 @@ export const globalStyles = StyleSheet.create({
 
     buttonText: {
         fontWeight: 'bold',
+        color: 'white',
         textTransform: 'uppercase',
     },
 
@@ -71,4 +79,43 @@ export const globalStyles = StyleSheet.create({
     selected: {
         backgroundColor: secondary,
     },
+
+    todo: {
+        marginHorizontal: 8,
+    },
+
+    card: {
+        borderWidth:  1,
+        borderRadius: 10,
+        marginBottom: 20,
+        paddingVertical: 10,
+    },
+
+    floatingbutton: {
+        backgroundColor: primary,
+        height: 60,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 2,
+        position: 'absolute',
+        right: 20,
+    },
+
+    errorText: {
+        color: warning,
+        fontWeight: 'bold',
+    },
+
+    cardTitle: {
+        fontSize: 24,
+    },
+
+    note: {
+        color: 'gray',
+    }
 })

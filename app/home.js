@@ -1,17 +1,21 @@
-import { View, Text, ScrollView, Pressable, SafeAreaView, Dimensions, StyleSheet } from "react-native";
+import { View, Text, ScrollView, Pressable, SafeAreaView, 
+    Dimensions, StyleSheet, Modal, TouchableWithoutFeedback, 
+    TouchableOpacity, Keyboard} from "react-native";
 import NavBar from "../components/navbar";
 import { UserAuth } from "../services/authContext";
-
+import { globalStyles } from "../global";
+import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from "react";
 import moment from "moment";
 import EventCalendar from 'react-native-events-calendar'; let { width } = Dimensions.get('window');
+import EventForm from "../components/eventform";
 
 
 const getCurrentDate = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-    return year + '-' + addZero(month) + '-' + addZero(date);//yyyy-mm-dd
+    return year + '-' + addZero(month) + '-' + addZero(date); //yyyy-mm-dd
 }
 
 
@@ -53,10 +57,36 @@ export default function CalenderPage() {
         },
     ];
 
-    return <View style={{ flex: 1, marginTop: 60}}>
-            <CalenderView events={events}/>
+
+    const [formModal, setFormModal] = useState(false);
+
+    return (
+    <View style={{ flex: 1, marginTop: 60}}>
+        <Modal visible={formModal} animationType="slide">
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={globalStyles.page}>
+                    <TouchableOpacity onPress={() => setFormModal(false)}>
+                        <MaterialIcons
+                            name='close'
+                            size={36}
+                            style={{alignSelf   : 'flex-end'}}
+                        />
+                    </TouchableOpacity>
+                    <EventForm submit={addItem}/>
+                </View>
+            </TouchableWithoutFeedback>
+        </Modal>
+        
+        <CalenderView events={events}/>
+        <TouchableOpacity style={{...globalStyles.floatingbutton, bottom: 110, ...globalStyles.iconbutton}} onPress={() => setFormModal(true)}>
+            <FontAwesome6
+                name='add'
+                size={36}
+                style={{color: 'white'}}
+            />
+        </TouchableOpacity>
         <NavBar/>
-    </View>
+    </View>);
 }
 
 export function EventComponent({style, item, dayIndex, daysTotal}) {
