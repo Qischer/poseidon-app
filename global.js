@@ -55,18 +55,16 @@ export const globalStyles = StyleSheet.create({
     },
 
     navbar: {
-        paddingBottom: 5,
         paddingTop: 10,
+        paddingBottom: 20,
         height: 90,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        borderTopWidth: 3,
-        borderColor: 'white',
         backgroundColor: primary,
     },
 
     iconbutton: {
-        borderRadius: 30,
+        borderRadius: 50,
         padding: 10,
     },
 
