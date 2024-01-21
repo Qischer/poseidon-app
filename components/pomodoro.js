@@ -1,48 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import  { View, Text, TouchableOpacity, Image } from 'react-native';
+import Plot from "../components/plot";
+import  { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 // import Sound from 'react-native-sound';
+
+const WORK_TIME = 6; // 25 minutes
+const REST_TIME = 5; // 5 minutes
 
 export default function PomodoroTimer() {
 
-    const [timer, setTimer] = useState(1500);
+    const [cornArray, setCornArray] = useState(Array(25));
+    const [isResting, setIsResting] = useState(false);
+    const [timer, setTimer] = useState(WORK_TIME);
     const [isActive, setIsActive] = useState(false);
-    const [image, setImage] = useState(<Image source = {require('../assets/corn.png')} />);
+    const [image, setImage] = useState(<Image source = {require('../assets/dirt.png')} />);
     const [onFire, setOnFire] = useState(false);
-
 
     useEffect(() => {
         let interval;
 
+        if (!isActive || isResting) {
+            window.removeEventListener("blur", stopTimer)
+        }
+
         if (isActive && timer > 0) {
+            window.addEventListener("blur", stopTimer);
             interval = setInterval(() => {
                 setTimer((prevTimer) => prevTimer - 1);
             }, 1000);
-        } else if (timer === 0) {
+        } else if (timer === 0 && !isResting) {
             setIsActive(false);
-            setTimer(300);
+            setIsResting(true);
+            setTimer(REST_TIME);
+            window.removeEventListener("blur", stopTimer);
+            // 1 = corn, 2 = burning corn, undefined = dirt
+            let tempCornArray = Array(25)
+            for (let i = 0; i < 25; i++) {
+                if (typeof(cornArray[i] != undefined)) {
+                    tempCornArray[i] = cornArray[i];
+                } else {
+                    tempCornArray[i] = 1;
+                    setCornArray(tempCornArray);
+                    console.log(tempCornArray);
+                    break;
+                }
+            }
+        } else if (timer === 0) {
+            resetTimer();
         }
 
+        
+
         return() => clearInterval(interval);
-     }, [isActive, timer]);
+     }, [isActive, isResting, timer]);
 
      const toggleTimer = () => {
+        setImage(<Image source = {require('../assets/dirt_with_corn.png')} />);
         setIsActive(!isActive);
-        window.addEventListener("blur", stopTimer);
      };
 
      const resetTimer = () => {
         setIsActive(false);
-        setTimer(1500);
-        setImage(<Image source = {require('../assets/corn.png')} />);
+        setIsResting(false);
+        setTimer(WORK_TIME);
+        setImage(<Image source = {require('../assets/dirt.png')} />);
         setOnFire(false);
-        window.removeEventListener("blur", stopTimer);
      };
  
      const stopTimer = () => {
         setIsActive(false);
-        setImage(<Image source = {require('../assets/corn_fire.png')} />);
+        setImage(<Image source = {require('../assets/dirt_with_corn_fire.png')} />);
         setOnFire(true);
-        window.removeEventListener("blur", stopTimer);
      };
 
      const formatTime = (seconds) => {
@@ -51,23 +78,31 @@ export default function PomodoroTimer() {
         return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
      };
 
-     const nothing = () => {
-
-     }
+     const styles = StyleSheet.create({
+        timer: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: 24,
+        },
+        image: {
+            //justifyContent: 'center',
+            //alignItems: 'center',
+            width: 100,
+            height: 100,
+        },
+        text: {
+            fontSize: 18,
+        },
+      });
 
      return (
-        <View>
-            <Text>{formatTime(timer)}</Text>
-            <TouchableOpacity onPress={!onFire ? toggleTimer : nothing}>
-                <Text>{isActive ? 'Pause' : 'Start'}</Text>
+        <View style = {{alignItems: 'center', padding: 100}}>
+            <Text style = {styles.timer}>{formatTime(timer)}</Text>
+            <TouchableOpacity onPress={!onFire ? toggleTimer : resetTimer} style = {{paddingBottom: 100}}>
+                <Text style = {styles.text}>{!onFire ? (isActive ? 'Pause' : 'Start') : 'Reset'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={resetTimer}>
-                <Text> Reset </Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={stopTimer}>
-                <Text> Stop </Text>
-            </TouchableOpacity> */}
             {image}
+            {/* <Plot cornArray={cornArray}/> */}
         </View>
      );
 };
