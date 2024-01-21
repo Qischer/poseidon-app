@@ -103,7 +103,6 @@ export const globalStyles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 2,
         position: 'absolute',
-        bottom: 20,
         right: 20,
     },
 
