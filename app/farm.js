@@ -2,6 +2,8 @@ import { View, Text, ScrollView, Image, SafeAreaView, StyleSheet } from "react-n
 import { useState } from 'react';
 import PomodoroTimer from "../components/pomodoro"
 import NavBar from "../components/navbar";
+import style from '../App.module.css';
+ 
 
 export default function FarmPage() {
 

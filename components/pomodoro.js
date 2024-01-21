@@ -34,7 +34,6 @@ export default function PomodoroTimer() {
         
             appState.current = nextAppState;
             setAppStateVisible(appState.current);
-            console.log('AppState', appState.current);
         });
 
 
@@ -44,7 +43,6 @@ export default function PomodoroTimer() {
             if (!isResting && appState.current.match(/inactive|background/)) {
                 stopTimer();
             }
-            console.log(isActive);
             interval = setInterval(() => {
                 setTimer((prevTimer) => prevTimer - 1);
             }, 1000);
