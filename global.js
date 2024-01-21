@@ -4,12 +4,22 @@ export const primary = "#66999B";
 export const secondary = "#694D75";
 export const warning = "#CD4631";
 
+export const primary = "#66999B";
+export const secondary = "#694D75";
+export const warning = "#CD4631";
+
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    page: {
+        flex: 1,
+        paddingTop: 70,
+        paddingHorizontal: 20,
     },
 
     page: {
@@ -47,6 +57,7 @@ export const globalStyles = StyleSheet.create({
 
     buttonText: {
         fontWeight: 'bold',
+        color: 'white',
         color: 'white',
         textTransform: 'uppercase',
     },
