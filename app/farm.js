@@ -1,9 +1,7 @@
 import { View, Text, ScrollView, Image, SafeAreaView, StyleSheet } from "react-native";
 import { useState } from 'react';
 import PomodoroTimer from "../components/pomodoro"
-import NavBar from "../components/navbar";
-import style from '../App.module.css';
- 
+import NavBar from "../components/navbar"; 
 
 export default function FarmPage() {
 
