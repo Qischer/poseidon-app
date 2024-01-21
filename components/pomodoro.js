@@ -5,6 +5,8 @@ import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'reac
 
 const WORK_TIME = 1500; // 25 minutes
 const REST_TIME = 300; // 5 minutes
+var cornCount = 0;
+var burntCount = 0;
 
 export default function PomodoroTimer() {
 
@@ -50,6 +52,7 @@ export default function PomodoroTimer() {
             setIsActive(false);
             setIsResting(true);
             setTimer(REST_TIME)
+            cornCount++;
             // 1 = corn, 2 = burning corn, undefined = dirt
             // let tempCornArray = Array(25)
             // for (let i = 0; i < 25; i++) {
@@ -89,6 +92,7 @@ export default function PomodoroTimer() {
         setIsActive(false);
         setImage(<Image source = {require('../assets/dirt_with_corn_fire.png')} style = {{width:200, height:267}}/>);
         setOnFire(true);
+        burntCount++;
      };
 
      const formatTime = (seconds) => {
@@ -113,6 +117,11 @@ export default function PomodoroTimer() {
             textAlign: 'center',
             padding: 16,
             fontSize: 36,
+        },
+        inline: {
+            height: 24,
+            width: 24,
+            
         }
       });
 
@@ -125,6 +134,14 @@ export default function PomodoroTimer() {
             </TouchableOpacity>
             {image}
             <Text style = {styles.text}> Don't kill the corn!</Text>
+            <Text style = {styles.text}> 
+                <Image style = {styles.inline} source = {require('../assets/corn_ground.png')}/>
+                {" "}: {cornCount}
+            </Text>
+            <Text style = {styles.text}> 
+                <Image style = {styles.inline} source = {require('../assets/corn_fire_ground.png')}/>
+                {" "}: {burntCount}
+            </Text>
             {/* <Plot cornArray={cornArray}/> */}
         </View>
      );
