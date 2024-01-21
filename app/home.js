@@ -7,7 +7,7 @@ import { globalStyles } from "../global";
 import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from "react";
 import moment from "moment";
-import EventCalendar from 'react-native-events-calendar';import { globalStyles } from "../global";
+import EventCalendar from 'react-native-events-calendar';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
  let { width } = Dimensions.get('window');

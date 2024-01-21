@@ -4,10 +4,6 @@ export const primary = "#66999B";
 export const secondary = "#694D75";
 export const warning = "#CD4631";
 
-export const primary = "#66999B";
-export const secondary = "#694D75";
-export const warning = "#CD4631";
-
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
