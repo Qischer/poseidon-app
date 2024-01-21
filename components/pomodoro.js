@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Plot from "../components/plot";
 import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
 // import Sound from 'react-native-sound';
 
