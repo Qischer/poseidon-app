@@ -17,11 +17,7 @@ export default function FarmPage() {
       });
     return (
     <View style={{flex: 1}}>
-        <View style = {styles.container}>
-            <ScrollView>  
-                <PomodoroTimer/>
-            </ScrollView>
-        </View>
+            <PomodoroTimer/>
         <NavBar/>
     </View>
     )

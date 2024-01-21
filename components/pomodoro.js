@@ -4,6 +4,7 @@ import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'reac
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { UserAuth } from '../services/authContext';
 import { db } from '../services/firebase';
+import { globalStyles } from '../global';
 // import Sound from 'react-native-sound';
 
 const WORK_TIME = 1500; // 25 minutes
@@ -17,7 +18,7 @@ export default function PomodoroTimer() {
     const [isResting, setIsResting] = useState(false);
     const [timer, setTimer] = useState(WORK_TIME);
     const [isActive, setIsActive] = useState(false);
-    const [image, setImage] = useState(<Image source = {require('../assets/dirt.png')} style = {{width:200, height:170}}/>);
+    const [image, setImage] = useState(<Image source = {require('../assets/dirt2.png')} style = {{width:200, height:267}}/>);
     const [onFire, setOnFire] = useState(false);
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
@@ -140,42 +141,45 @@ export default function PomodoroTimer() {
             justifyContent: 'center',
             alignItems: 'center',
             fontSize: 36,
+            alignSelf: 'center',
         },
         text: {
             paddingTop: 10,
             fontSize: 24,
         },
-        title: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            padding: 16,
-            fontSize: 36,
-        },
         inline: {
             height: 24,
             width: 24,
-            
         }
       });
 
      return (
-        <View style = {{alignItems: 'center', padding: 100}}>
-            <Text style = {styles.title}> Pomodoro Timer </Text>
-            <Text style = {styles.timer}>{formatTime(timer)}</Text>
-            <TouchableOpacity onPress={!onFire ? toggleTimer : resetTimer} style = {{paddingBottom: 100}}>
-                <Text style = {styles.text}>{!onFire ? (isActive ? 'Pause' : 'Start') : 'Reset'}</Text>
-            </TouchableOpacity>
-            {image}
-            <Text style = {styles.text}> Don't kill the corn!</Text>
-            <Text style = {styles.text}> 
-                <Image style = {styles.inline} source = {require('../assets/corn_ground.png')}/>
-                {" "}: {cornCount}
-            </Text>
-            <Text style = {styles.text}> 
-                <Image style = {styles.inline} source = {require('../assets/corn_fire_ground.png')}/>
-                {" "}: {burntCount}
-            </Text>
+        <View style = {{flex: 1}}>
+            <View style={globalStyles.page}>
+                <Text style = {globalStyles.title}> Pomodoro Timer </Text>
+                <View style={{marginVertical: 30, flex: 1}}>
+                    <Text style = {styles.timer}>{formatTime(timer)}</Text>
+                    <TouchableOpacity onPress={!onFire ? toggleTimer : resetTimer} style = {globalStyles.button}>
+                        <Text style = {globalStyles.buttonText}>{!onFire ? (isActive ? 'Pause' : 'Start') : 'Reset'}</Text>
+                    </TouchableOpacity>
+                    <View style={{alignItems: 'center', position: 'absolute', bottom: 0, alignSelf: 'center'}}>
+                        {image}
+                        <Text style = {styles.text}> Don't kill the corn!</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>  
+                            <Image style = {styles.inline} source = {require('../assets/corn_ground.png')}/>
+                            <Text style = {styles.text}> 
+                                {" "}: {cornCount}
+                            </Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Image style = {styles.inline} source = {require('../assets/corn_fire_ground.png')}/>
+                            <Text style = {styles.text}> 
+                                {" "}: {burntCount}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
             {/* <Plot cornArray={cornArray}/> */}
         </View>
      );
