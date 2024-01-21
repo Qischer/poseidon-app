@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "^3.1.1",
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.8",
     "expo": "^50.0.2",
     "expo-constants": "~15.4.5",
     "expo-firebase": "^0.0.0-alpha.0",
