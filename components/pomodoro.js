@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Plot from "../components/plot";
 import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { UserAuth } from '../services/authContext';
+import { db } from '../services/firebase';
 // import Sound from 'react-native-sound';
 
 const WORK_TIME = 1500; // 25 minutes
 const REST_TIME = 300; // 5 minutes
-var cornCount = 0;
-var burntCount = 0;
 
 export default function PomodoroTimer() {
+
+    const {user} = UserAuth();
 
     const [cornArray, setCornArray] = useState(Array(25));
     const [isResting, setIsResting] = useState(false);
@@ -31,7 +34,6 @@ export default function PomodoroTimer() {
             ) {
                 console.log('App has come to the foreground!');
             }
-        
             appState.current = nextAppState;
             setAppStateVisible(appState.current);
         });
@@ -50,7 +52,7 @@ export default function PomodoroTimer() {
             setIsActive(false);
             setIsResting(true);
             setTimer(REST_TIME)
-            cornCount++;
+            setCornCount(cornCount + 1);
             // 1 = corn, 2 = burning corn, undefined = dirt
             // let tempCornArray = Array(25)
             // for (let i = 0; i < 25; i++) {
@@ -71,7 +73,41 @@ export default function PomodoroTimer() {
             clearInterval(interval);
             subscription.remove();
         };
-     }, [timer, isActive, isResting]);
+    }, [timer, isActive, isResting]);
+
+    
+    const [cornCount, setCornCount] = useState(0);
+    const [burntCount, setBurntCount] = useState(0);
+    const [isFirstCall, setIsFirstCall] = useState(true);
+
+    useEffect(()=> {
+        fetchData();
+        setTimeout(()=> setIsFirstCall(false), 150);
+     },[]);
+
+    useEffect(() => {
+        if (!isFirstCall) updateCount();
+    },[cornCount, burntCount]);
+
+    const fetchData = async () => {
+        const todoRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(todoRef);
+
+        if (docSnap.exists()) {
+            setCornArray(docSnap.data().cornCount);
+            setBurntCount(docSnap.data().burntCount);
+        } else {
+            // docSnap.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }
+
+    const updateCount = async () => {
+        console.log("update");
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {cornCount : cornCount});
+        await updateDoc(docRef, {burntCount : burntCount});
+    } 
 
      const toggleTimer = () => {
         setImage(<Image source = {require('../assets/dirt_with_corn.png')} style = {{width:200, height:267}} />);
@@ -90,7 +126,7 @@ export default function PomodoroTimer() {
         setIsActive(false);
         setImage(<Image source = {require('../assets/dirt_with_corn_fire.png')} style = {{width:200, height:267}}/>);
         setOnFire(true);
-        burntCount++;
+        setBurntCount(burntCount + 1);
      };
 
      const formatTime = (seconds) => {
