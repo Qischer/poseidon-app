@@ -6,12 +6,13 @@ import { db } from "../services/firebase";
 LogBox.ignoreAllLogs;
 
 export default function FarmPage() {
+    console.log('farm page')
     const handleDatabase = async () => {
         await setDoc(doc(db, "cities", "LA"), {
             name: "HOLY FUCKING SHIT IT WORKSSSS",
             state: "CA",
             country: "USA"
-          });
+          }).then(()=> console.log('test db worked!'));
     }
 
     return <View style={{flex: 1}}>
