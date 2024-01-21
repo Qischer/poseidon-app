@@ -1,10 +1,13 @@
-import { View, Text, ScrollView, Pressable, SafeAreaView, Dimensions, StyleSheet } from "react-native";
+import { View, Text, ScrollView, Pressable, SafeAreaView, Dimensions, StyleSheet, TouchableOpacity, Modal, DatePickerIOS } from "react-native";
 import NavBar from "../components/navbar";
 import { UserAuth } from "../services/authContext";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import EventCalendar from 'react-native-events-calendar'; let { width } = Dimensions.get('window');
+import EventCalendar from 'react-native-events-calendar';import { globalStyles } from "../global";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
+ let { width } = Dimensions.get('window');
 
 
 const getCurrentDate = () => {
@@ -13,7 +16,6 @@ const getCurrentDate = () => {
     var year = new Date().getFullYear();
     return year + '-' + addZero(month) + '-' + addZero(date);//yyyy-mm-dd
 }
-
 
     const addZero = (a) => {
         if (a < 10 && a > 0) {
@@ -26,38 +28,109 @@ const getCurrentDate = () => {
 export default function CalenderPage() {
     const {user} = UserAuth();
 
-    const [datecolor,setDateColor]=useState("")
-
-    
-    const [date, setDate] = useState(getCurrentDate().toString())
-
-    const [timetableDate] = React.useState(new Date());
     const [from] = React.useState(moment().subtract(3, 'days').toDate());
     const [till] = React.useState(moment().add(3, 'days').toISOString());
     const range = {from, till};
 
-    const [items] = React.useState([
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [events, setEvents] = useState([
         {
-            title: 'Some event',
-            startDate: moment().subtract(1, 'hour').toDate(),
-            endDate: moment().add(1, 'hour').toDate(),
+            start: '2024-01-20 00:00:00',
+            end: '2024-01-20 01:00:00',
+            title: 'Losing my mind for Boilermake',
+            summary: 'Meredith',
         },
     ]);
 
-    const events = [
+    let testBuffer =[
         {
             start: '2024-01-20 00:00:00',
+            end: '2024-01-20 01:00:00',
+            title: '1',
+            summary: 'Meredith',
+        },
+        {
+            start: '2024-01-20 01:00:00',
             end: '2024-01-20 02:00:00',
-            title: 'Losing my mind',
+            title: '2',
+            summary: 'Meredith',
+        },
+        {
+            start: '2024-01-20 03:00:00',
+            end: '2024-01-20 04:00:00',
+            title: '3',
             summary: 'Meredith',
         },
     ];
 
+    const [isFirstCall, setIsFirstCall] = useState(true);
+
+    useEffect(()=> {
+        console.log('initial fetch');
+        fetchData();
+        setTimeout(()=> setIsFirstCall(false), 150);
+    },[]);
+
+    useEffect(()=> {
+        if (!isFirstCall) updateList();
+    },[events]);
+
+    const updateList = async () => {
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {calenderEvents : events}).then(() => console.log("updated db"));
+    }
+
+    const fetchData = async ()=> {
+        const todoRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(todoRef);
+
+        if (docSnap.exists()) {
+            setEvents(docSnap.data().calenderEvents);
+        } else {
+            // docSnap.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }
+
+    const addItem = (item) => {
+        setEvents(prevList => [...prevList, item]);
+        console.log(events);
+    }
+
+    const handleAdd = async () => {
+        const item = testBuffer.pop();
+        console.log(item);
+        console.log('added');
+        addItem(item);
+    }
+
     return <View style={{ flex: 1, marginTop: 60}}>
             <CalenderView events={events}/>
+        
+        <TouchableOpacity onPress={handleAdd}>
+            <Text style={globalStyles.button}>Show Modal</Text>
+        </TouchableOpacity>
+
+      {/* <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={toggleModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>This is your modal content</Text>
+            <TouchableOpacity onPress={toggleModal}>
+              <Text>Close Modal</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal> */}
         <NavBar/>
     </View>
 }
+
+
 
 export function EventComponent({style, item, dayIndex, daysTotal}) {
     return (
