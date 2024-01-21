@@ -52,5 +52,23 @@ export const globalStyles = StyleSheet.create({
     impactText :{
         color: "gray",
         fontSize: 14,
-    }
+    },
+
+    navbar: {
+        paddingTop: 10,
+        paddingBottom: 20,
+        height: 90,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        backgroundColor: primary,
+    },
+
+    iconbutton: {
+        borderRadius: 50,
+        padding: 10,
+    },
+
+    selected: {
+        backgroundColor: secondary,
+    },
 })
