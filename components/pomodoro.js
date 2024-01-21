@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Plot from "../components/plot";
-import  { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
 // import Sound from 'react-native-sound';
 
 const WORK_TIME = 6; // 25 minutes
@@ -14,44 +14,63 @@ export default function PomodoroTimer() {
     const [isActive, setIsActive] = useState(false);
     const [image, setImage] = useState(<Image source = {require('../assets/dirt.png')} />);
     const [onFire, setOnFire] = useState(false);
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+    var evtListenerAdded = false;
+
 
     useEffect(() => {
+
+        const subscription = AppState.addEventListener('change', nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === 'active'
+            ) {
+                console.log('App has come to the foreground!');
+            }
+        
+            appState.current = nextAppState;
+            setAppStateVisible(appState.current);
+            console.log('AppState', appState.current);
+        });
+
+
         let interval;
 
-        if (!isActive || isResting) {
-            window.removeEventListener("blur", stopTimer)
-        }
-
         if (isActive && timer > 0) {
-            window.addEventListener("blur", stopTimer);
+            if (!isResting && appState.current.match(/inactive|background/)) {
+                stopTimer();
+            }
+            console.log(isActive);
             interval = setInterval(() => {
                 setTimer((prevTimer) => prevTimer - 1);
             }, 1000);
-        } else if (timer === 0 && !isResting) {
+        } else if (timer === 0 && !isResting) { 
             setIsActive(false);
             setIsResting(true);
-            setTimer(REST_TIME);
-            window.removeEventListener("blur", stopTimer);
+            setTimer(REST_TIME)
             // 1 = corn, 2 = burning corn, undefined = dirt
-            let tempCornArray = Array(25)
-            for (let i = 0; i < 25; i++) {
-                if (typeof(cornArray[i] != undefined)) {
-                    tempCornArray[i] = cornArray[i];
-                } else {
-                    tempCornArray[i] = 1;
-                    setCornArray(tempCornArray);
-                    console.log(tempCornArray);
-                    break;
-                }
-            }
+            // let tempCornArray = Array(25)
+            // for (let i = 0; i < 25; i++) {
+            //     if (typeof(cornArray[i] != undefined)) {
+            //         tempCornArray[i] = cornArray[i];
+            //     } else {
+            //         tempCornArray[i] = 1;
+            //         setCornArray(tempCornArray);
+            //         console.log(tempCornArray);
+            //         break;
+            //     }
+            // }
         } else if (timer === 0) {
-            resetTimer();
+            resetTimer();   
         }
 
-        
-
-        return() => clearInterval(interval);
-     }, [isActive, isResting, timer]);
+        return() => {
+            clearInterval(interval);
+            subscription.remove();
+        };
+     }, [timer, isActive, isResting]);
 
      const toggleTimer = () => {
         setImage(<Image source = {require('../assets/dirt_with_corn.png')} />);
