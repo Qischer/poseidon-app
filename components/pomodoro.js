@@ -3,8 +3,8 @@ import Plot from "../components/plot";
 import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
 // import Sound from 'react-native-sound';
 
-const WORK_TIME = 6; // 25 minutes
-const REST_TIME = 5; // 5 minutes
+const WORK_TIME = 1500; // 25 minutes
+const REST_TIME = 300; // 5 minutes
 
 export default function PomodoroTimer() {
 
@@ -12,7 +12,7 @@ export default function PomodoroTimer() {
     const [isResting, setIsResting] = useState(false);
     const [timer, setTimer] = useState(WORK_TIME);
     const [isActive, setIsActive] = useState(false);
-    const [image, setImage] = useState(<Image source = {require('../assets/dirt.png')} />);
+    const [image, setImage] = useState(<Image source = {require('../assets/dirt.png')} style = {{width:200, height:170}}/>);
     const [onFire, setOnFire] = useState(false);
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
@@ -73,7 +73,7 @@ export default function PomodoroTimer() {
      }, [timer, isActive, isResting]);
 
      const toggleTimer = () => {
-        setImage(<Image source = {require('../assets/dirt_with_corn.png')} />);
+        setImage(<Image source = {require('../assets/dirt_with_corn.png')} style = {{width:200, height:267}} />);
         setIsActive(!isActive);
      };
 
@@ -81,13 +81,13 @@ export default function PomodoroTimer() {
         setIsActive(false);
         setIsResting(false);
         setTimer(WORK_TIME);
-        setImage(<Image source = {require('../assets/dirt.png')} />);
+        setImage(<Image source = {require('../assets/dirt.png')} style = {{width:200, height:170}}/>);
         setOnFire(false);
      };
  
      const stopTimer = () => {
         setIsActive(false);
-        setImage(<Image source = {require('../assets/dirt_with_corn_fire.png')} />);
+        setImage(<Image source = {require('../assets/dirt_with_corn_fire.png')} style = {{width:200, height:267}}/>);
         setOnFire(true);
      };
 
@@ -101,26 +101,30 @@ export default function PomodoroTimer() {
         timer: {
             justifyContent: 'center',
             alignItems: 'center',
-            fontSize: 24,
-        },
-        image: {
-            //justifyContent: 'center',
-            //alignItems: 'center',
-            width: 100,
-            height: 100,
+            fontSize: 36,
         },
         text: {
-            fontSize: 18,
+            paddingTop: 10,
+            fontSize: 24,
         },
+        title: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            padding: 16,
+            fontSize: 36,
+        }
       });
 
      return (
         <View style = {{alignItems: 'center', padding: 100}}>
+            <Text style = {styles.title}> Pomodoro Timer </Text>
             <Text style = {styles.timer}>{formatTime(timer)}</Text>
             <TouchableOpacity onPress={!onFire ? toggleTimer : resetTimer} style = {{paddingBottom: 100}}>
                 <Text style = {styles.text}>{!onFire ? (isActive ? 'Pause' : 'Start') : 'Reset'}</Text>
             </TouchableOpacity>
             {image}
+            <Text style = {styles.text}> Don't kill the corn!</Text>
             {/* <Plot cornArray={cornArray}/> */}
         </View>
      );
