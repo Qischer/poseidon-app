@@ -1,20 +1,24 @@
-import { View, Text, ScrollView, Pressable, SafeAreaView, Dimensions, StyleSheet, TouchableOpacity, Modal, DatePickerIOS } from "react-native";
+import { View, Text, ScrollView, Pressable, SafeAreaView, 
+    Dimensions, StyleSheet, Modal, TouchableWithoutFeedback, 
+    TouchableOpacity, Keyboard} from "react-native";
 import NavBar from "../components/navbar";
 import { UserAuth } from "../services/authContext";
-
-import React, { useEffect, useState } from "react";
+import { globalStyles } from "../global";
+import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
 import moment from "moment";
-import EventCalendar from 'react-native-events-calendar';import { globalStyles } from "../global";
+import EventCalendar from 'react-native-events-calendar';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
- let { width } = Dimensions.get('window');
+import EventForm from "../components/eventform";
 
+const { width } = Dimensions.get('window');
 
 const getCurrentDate = () => {
     var date = new Date().getDate();
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
-    return year + '-' + addZero(month) + '-' + addZero(date);//yyyy-mm-dd
+    return year + '-' + addZero(month) + '-' + addZero(date); //yyyy-mm-dd
 }
 
     const addZero = (a) => {
@@ -81,8 +85,8 @@ export default function CalenderPage() {
     }
 
     const fetchData = async ()=> {
-        const todoRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(todoRef);
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             setEvents(docSnap.data().calenderEvents);
@@ -93,6 +97,8 @@ export default function CalenderPage() {
     }
 
     const addItem = (item) => {
+        console.log("added item");
+        console.log(item);
         setEvents(prevList => [...prevList, item]);
         console.log(events);
     }
@@ -104,30 +110,43 @@ export default function CalenderPage() {
         addItem(item);
     }
 
-    return <View style={{ flex: 1, marginTop: 60}}>
-            <CalenderView events={events}/>
-        
-        <TouchableOpacity onPress={handleAdd}>
-            <Text style={globalStyles.button}>Show Modal</Text>
-        </TouchableOpacity>
 
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text>This is your modal content</Text>
-            <TouchableOpacity onPress={toggleModal}>
-              <Text>Close Modal</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
+    const [formModal, setFormModal] = useState(false);
+
+    return (
+    <View style={{ flex: 1, marginTop: 60}}>
+        <Modal visible={formModal} animationType="slide">
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={globalStyles.page}>
+                    <TouchableOpacity onPress={() => setFormModal(false)}>
+                        <MaterialIcons
+                            name='close'
+                            size={36}
+                            style={{alignSelf   : 'flex-end'}}
+                        />
+                    </TouchableOpacity>
+                    <EventForm submit={addItem}/>
+                </View>
+            </TouchableWithoutFeedback>
+        </Modal>
+        
+        <CalenderView events={events}/>
+        {/* <TouchableOpacity style={{...globalStyles.floatingbutton, bottom: 200, ...globalStyles.iconbutton}} onPress={() => console.log(events)}>
+            <FontAwesome6
+                name='add'
+                size={36}
+                style={{color: 'white'}}
+            />
+        </TouchableOpacity> */}
+        <TouchableOpacity style={{...globalStyles.floatingbutton, bottom: 110, ...globalStyles.iconbutton}} onPress={() => setFormModal(true)}>
+            <FontAwesome6
+                name='add'
+                size={36}
+                style={{color: 'white'}}
+            />
+        </TouchableOpacity>
         <NavBar/>
-    </View>
+    </View>);
 }
 
 
@@ -146,24 +165,34 @@ export function EventComponent({style, item, dayIndex, daysTotal}) {
     );
 }
 
-export class CalenderView extends React.Component { constructor(props) {
-    super(props); this.state = {
-        events: this.props.events,
-    };
-    }
-        eventClicked(event) { alert(JSON.stringify(event));
-    }
-    
-    render() { return (
+function CalenderView(props) {
+    return (
         <View style={styles.container}>
-        <EventCalendar eventTapped={this.eventClicked.bind(this)} events={this.state.events}
-        width={width} size={60}
-        initDate={getCurrentDate().toString()}
-        />
-        </View>
-    );
-    }
-    }
+            <EventCalendar events={props.events}
+            width={width} size={60}
+            initDate={getCurrentDate().toString()}/>
+        </View>);
+}
+
+// export class CalenderView extends React.Component { 
+//     constructor(props) {
+
+//     super(props); this.state = {
+//         events: this.props.events,
+//     };
+//     }
+//         eventClicked(event) { alert(JSON.stringify(event));}
+    
+//     render() { return (
+//         <View style={styles.container}>
+//         <EventCalendar eventTapped={this.eventClicked.bind(this)} events={this.state.events}
+//         width={width} size={60}
+//         initDate={getCurrentDate().toString()}
+//         />
+//         </View>
+//     );
+//     }
+// }
 
     const styles = StyleSheet.create({
         container: {

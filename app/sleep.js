@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Button } from "react-native";
 import NavBar from "../components/navbar";
 import { CircularProgressBase } from 'react-native-circular-progress-indicator';
 import { useState } from "react";
@@ -34,6 +34,6 @@ export default function SleepPage() {
                 <SleepStuff/>
             </ScrollView>
         </View>
-        <NavBar/>
-    </View>
-}
+    );
+    };
+};

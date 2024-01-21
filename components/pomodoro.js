@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Plot from "../components/plot";
 import  { View, Text, TouchableOpacity, Image, StyleSheet, AppState } from 'react-native';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { UserAuth } from '../services/authContext';
@@ -23,7 +22,6 @@ export default function PomodoroTimer() {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
-    var evtListenerAdded = false;
 
 
     useEffect(() => {
