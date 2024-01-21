@@ -1,49 +1,41 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Button } from "react-native";
 import { Link } from "expo-router";
-import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { globalStyles } from "../global";
+import { useState } from "react";
+import { usePathname } from "expo-router";
 
-export default function NavBar() {
-    return <View style={styles.bar}>
-        <Link href="/home" asChild>
-            <Pressable style={styles.iconbutton}>
-                <Feather name="calendar" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
-        <Link href="/todo" asChild>
-            <Pressable style={styles.iconbutton}>
-                <Feather name="check-circle" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
-        <Link href="/sleep" asChild>
-            <Pressable style={styles.iconbutton}>
-                <Feather name="moon" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
-        <Link href="/farm" asChild>
-            <Pressable style={styles.iconbutton}>
-                <MaterialCommunityIcons name="tree-outline" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
-        <Link href="/settings" asChild>
-            <Pressable style={styles.iconbutton}>
-                <Feather name="settings" color={'blue'} size={40} />
-            </Pressable>
-        </Link>
-    </View>
+
+
+function NavBar() {
+    const navList= [
+        { href: "/home", name: "calendar" },
+        { href: "/todo", name: "check-circle" },
+        { href: "/sleep", name: "moon" },
+        { href: "/farm", name: "sun" },
+        { href: "/settings", name: "settings" },
+    ]
+
+    const pathname = usePathname();
+
+    const renderList = () => {
+        const list = navList.map(item => 
+            <Link href={item.href} key={item.href} asChild>
+                { (pathname == item.href) ? <Pressable style={{... globalStyles.iconbutton, ... globalStyles.selected}}>
+                    <Feather name={item.name} color={'white'} size={40} />
+                </Pressable> 
+                :
+                <Pressable style={globalStyles.iconbutton}>
+                    <Feather name={item.name} color={'white'} size={40} />
+                </Pressable> 
+                }
+            </Link>
+        )
+        return list;
+    };
+    
+    return <View style={globalStyles.navbar}>
+        {renderList()}
+    </View>;
 }
-
-const styles = StyleSheet.create({
-    bar: {
-        paddingBottom: 5,
-        paddingTop: 10,
-        height: 80,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        borderTopWidth: 3,
-        borderColor: 'blue',
-    },
-
-    iconbutton: {
-        
-    },
-})
+export default NavBar;
