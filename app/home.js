@@ -44,8 +44,17 @@ export default function CalenderPage() {
         },
     ]);
 
+    const events = [
+        {
+            start: '2024-01-20 00:00:00',
+            end: '2024-01-20 02:00:00',
+            title: 'Losing my mind',
+            summary: 'Meredith',
+        },
+    ];
+
     return <View style={{ flex: 1, marginTop: 60}}>
-            <CalenderView/>
+            <CalenderView events={events}/>
         <NavBar/>
     </View>
 }
@@ -66,15 +75,7 @@ export function EventComponent({style, item, dayIndex, daysTotal}) {
 
 export class CalenderView extends React.Component { constructor(props) {
     super(props); this.state = {
-        events:[
-            
-            {
-                start: '2024-01-20 00:00:00',
-                end: '2024-01-20 02:00:00',
-                title: 'Losing my mind',
-                summary: 'Meredith',
-            },
-        ],
+        events: this.props.events,
     };
     }
         eventClicked(event) { alert(JSON.stringify(event));
