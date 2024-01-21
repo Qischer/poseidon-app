@@ -4,10 +4,18 @@ import { SafeAreaView, Text, View, TextInput, TouchableOpacity, StatusBar, Alert
 import { auth } from "../services/firebase";
 import { router } from "expo-router";
 import { globalStyles } from "../global";
+import { UserAuth } from "../services/authContext";
 
 LogBox.ignoreAllLogs();
 
 export default function Login({ navigation }) {
+
+  const {user} = UserAuth();
+
+  if (user) {
+    router.push('/home');
+  }
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import NavBar from "../components/navbar";
 import { Avatar } from "@rneui/themed";
 import { UserAuth } from "../services/authContext";
@@ -23,6 +23,10 @@ export default function SettingsPage() {
             </View>
         </View>
         </ScrollView>
+
+        <Pressable onPress={handleLogout}>
+                <Text>Log Out</Text>
+        </Pressable>
         <NavBar/>
     </View>
 }
