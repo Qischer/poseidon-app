@@ -8,21 +8,19 @@ const reviewSchema = yup.object({
         .required()
         .min(4),
 
-    start: yup.string().required(),
+    date: yup.string(),
     
-    end: yup.string().required(),
-
-    summary: yup.string()
+    notes: yup.string(),
 });
 
-export default function EventForm({ submit }) {
+export default function TodoForm({ submit }) {
     return <View>
-        <Text style={globalStyles.title}>Add Event</Text>
+        <Text style={globalStyles.title}>Add Todo</Text>
         <Formik
-            initialValues={{ title: '', start: '', end: '', summary: '' }}
+            initialValues={{ title: '', date: '', notes: '' }}
             validationSchema={reviewSchema}
             onSubmit={(values) => {
-                submit(values);
+                submit({title: values.title, notes: values.notes, tags: [], date: values.date, reminders: []});
             }}
         >
             {(formikProps) => (
@@ -40,35 +38,24 @@ export default function EventForm({ submit }) {
 
                         <TextInput
                             style={globalStyles.input}
-                            placeholder='Start date (yyyy-mm-dd hh:mm:ss)'
+                            placeholder='Date (yyyy-mm-dd)'
                             placeholderTextColor='#bbb'
-                            onChangeText={formikProps.handleChange('start')}
-                            value={formikProps.values.start}
-                            onBlur={formikProps.handleBlur('start')}
+                            onChangeText={formikProps.handleChange('date')}
+                            value={formikProps.values.date}
+                            onBlur={formikProps.handleBlur('date')}
                         />
-                        <Text style={globalStyles.errorText}>{ formikProps.touched.start && formikProps.errors.start }</Text>
+                        <Text style={globalStyles.errorText}>{ formikProps.touched.date && formikProps.errors.date }</Text>
 
                         <TextInput
                             multiline minHeight={60}
                             style={globalStyles.input}
-                            placeholder='End date (yyyy-mm-dd hh:mm:ss)'
+                            placeholder='Notes'
                             placeholderTextColor='#bbb'
-                            onChangeText={formikProps.handleChange('end')}
-                            value={formikProps.values.end}
-                            onBlur={formikProps.handleBlur('end')}
+                            onChangeText={formikProps.handleChange('notes')}
+                            value={formikProps.values.notes}
+                            onBlur={formikProps.handleBlur('notes')}
                         />
-                        <Text style={globalStyles.errorText}>{ formikProps.touched.end && formikProps.errors.end }</Text>
-
-                        <TextInput
-                            multiline minHeight={60}
-                            style={globalStyles.input}
-                            placeholder='Summary'
-                            placeholderTextColor='#bbb'
-                            onChangeText={formikProps.handleChange('summary')}
-                            value={formikProps.values.summary}
-                            onBlur={formikProps.handleBlur('summary')}
-                        />
-                        <Text style={globalStyles.errorText}>{ formikProps.touched.summary && formikProps.errors.summary }</Text>
+                        <Text style={globalStyles.errorText}>{ formikProps.touched.notes && formikProps.errors.notes }</Text>
                     </View>
 
                     <TouchableOpacity onPress={formikProps.handleSubmit} style={globalStyles.button}>

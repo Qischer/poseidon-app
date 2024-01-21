@@ -89,7 +89,7 @@ export default function SignUp() {
             }}
           >
             <Text style={globalStyles.impactText}>
-              Don't have an account?{" "}
+              Already have an account?{" "}
             </Text>
             <TouchableOpacity onPress={() => router.push("/")}>
               <Text style={globalStyles.link}>Log In</Text>

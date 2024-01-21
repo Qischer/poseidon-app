@@ -18,6 +18,12 @@ export const globalStyles = StyleSheet.create({
         paddingHorizontal: 20,
     },
 
+    page: {
+        flex: 1,
+        paddingTop: 70,
+        paddingHorizontal: 20,
+    },
+
     title: {
         fontSize: 40,
         marginBottom: 20,
@@ -47,6 +53,7 @@ export const globalStyles = StyleSheet.create({
 
     buttonText: {
         fontWeight: 'bold',
+        color: 'white',
         color: 'white',
         textTransform: 'uppercase',
     },
